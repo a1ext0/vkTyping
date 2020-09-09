@@ -11,8 +11,11 @@ class Bot {
     this.bot.onText(/\/listen/, (msg, match) => {
       this.listen();
       this.bot.sendMessage(this.user, 'listening');
-      this.event.on('typing', (data) => {
-        this.bot.sendMessage(this.user, `${data} набирает!`);
+      this.event.on('typing', (user) => {
+        this.bot.sendMessage(
+          this.user,
+          `${user.first_name} ${user.last_name} набирает сообщение!`
+        );
       });
     });
   }
