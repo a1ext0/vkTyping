@@ -5,3 +5,4 @@ dist/
 *.log
 secret.ts
 .DS_Store
+*var.json

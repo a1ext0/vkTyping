@@ -19,23 +19,16 @@ class Db {
     return this._data;
   }
   /**
-   * Записывает объект в файл
-   */
-  set data(json: any) {
-    console.log(123);
-
-    let str: string;
-    str = JSON.stringify(json);
-    fs.writeFileSync(path.resolve('var.json'), str);
-    this._data = json;
-  }
-  /**
    * Добавляет пользователя
    */
-  add(id: number, name: string): true | false {
-    if (!this.data[id]) {
-      this.data[id] = name;
-      return true;
+  add(user: any): string | false {
+    if (!this.data[user.id]) {
+      let name = `${user.first_name} ${user.last_name}`;
+      this._data[user.id] = name;
+      let str: string;
+      str = JSON.stringify(this.data);
+      fs.writeFileSync(path.resolve('var.json'), str);
+      return name;
     } else {
       return false;
     }
@@ -52,12 +45,4 @@ class Db {
   }
 }
 
-let db = new Db();
-
-db.add(321, 'peter');
-console.log(db.get(321));
-console.log(db.get(123));
-db.data = { 123: 'test2' };
-console.log(db.get(123));
-
-// export default new Db();
+export default new Db();

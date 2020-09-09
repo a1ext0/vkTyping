@@ -4,6 +4,7 @@ import { VK } from 'easyvk';
 import { Longpoll } from 'easyvk';
 import cr from '../cr';
 import { EventEmitter } from 'node-telegram-bot-api';
+import db from './db';
 
 class Easyvk {
   vk: Promise<VK>;
@@ -28,18 +29,24 @@ class Easyvk {
   }
 
   async getUser(url: number): Promise<any> {
-    let vk = await this.vk;
-    let user;
-    try {
-      user = await vk.call('users.get', {
-        user_ids: url,
-      });
-      return user[0];
-    } catch (error) {
-      if (error.error_code != 113) {
-        console.error(error);
+    let user: any;
+    user = db.get(url);
+    if (user) {
+      return user;
+    } else {
+      let vk = await this.vk;
+      try {
+        user = await vk.call('users.get', {
+          user_ids: url,
+        });
+        let name = db.add(user[0]);
+        return name;
+      } catch (error) {
+        if (error.error_code != 113) {
+          console.error(error);
+        }
+        return false;
       }
-      return false;
     }
   }
 
