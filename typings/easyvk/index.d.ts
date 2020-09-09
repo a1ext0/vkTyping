@@ -41,6 +41,9 @@ declare module 'easyvk' {
         isWeb: boolean
       ): Promise<any>;
     };
+    longpoll: {
+      connect(params: object): Promise<Longpoll>;
+    };
   }
 
   interface EasyVkStatic {
@@ -54,12 +57,9 @@ declare module 'easyvk' {
     callbackAPI: {
       listen(params: object): object;
     };
-    longpoll: {
-      connect(params: object): Promise<Longpoll>;
-    };
   }
 
-  interface Longpoll {
+  export interface Longpoll {
     addEventCodeListener(eventCode: number, handler: Function): void;
     debug(debug: Function): void;
     close(): void;

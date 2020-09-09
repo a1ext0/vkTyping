@@ -2,7 +2,8 @@ import secret from './secret';
 
 class Credentials {
   vk = {
-    token: secret.token,
+    tgToken: secret.tgToken,
+    vkToken: secret.vkToken,
     user: secret.user,
   };
 }
